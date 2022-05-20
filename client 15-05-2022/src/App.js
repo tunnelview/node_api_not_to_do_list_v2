@@ -10,135 +10,146 @@ import { fetchAllTasks, postTask } from "./helpers/axiosHelper";
 const weeklyHrs = 24 * 7;
 
 const App = () => {
-	const [taskList, setTaskList] = useState([]);
-	const [badList, setBadList] = useState([]);
+  const [taskList, setTaskList] = useState([]);
+  const [badList, setBadList] = useState([]);
 
-	const [response, setResponse] = useState({
-		status: "",
-		message: "",
-	});
-	const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState({
+    status: "",
+    message: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const result = await fetchAllTasks();
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await fetchAllTasks();
 
-			result?.status === "success" && setTaskList(result.result);
+      result?.status === "success" && setTaskList(result.result);
 
-			console.log(result);
-		};
-		fetchData();
-	}, []);
+      console.log(result);
+    };
+    fetchData();
+  }, []);
 
-	const deleteTask = () => {
-		return window.confirm("Are you sure you want to delete this task?");
-	};
+  const deleteTask = () => {
+    return window.confirm("Are you sure you want to delete this task?");
+  };
 
-	// remove item form the task list
-	const removeFromTaskList = i => {
-		if (deleteTask()) {
-			const filteredArg = taskList.filter((item, index) => index !== i);
-			setTaskList(filteredArg);
-		}
-	};
-	// remove item form the bad list
-	const removeFromBadList = i => {
-		if (deleteTask()) {
-			const filteredArg = badList.filter((item, index) => index !== i);
-			setBadList(filteredArg);
-		}
-	};
+  // remove item form the task list
+  const removeFromTaskList = (i) => {
+    if (deleteTask()) {
+      const filteredArg = taskList.filter((item, index) => index !== i);
+      setTaskList(filteredArg);
+    }
+  };
+  // remove item form the bad list
+  const removeFromBadList = (i) => {
+    if (deleteTask()) {
+      const filteredArg = badList.filter((item, index) => index !== i);
+      setBadList(filteredArg);
+    }
+  };
 
-	const shiftToBadList = i => {
-		const item = taskList[i];
+  const shiftToBadList = (i) => {
+    const item = taskList[i];
 
-		setBadList([...badList, item]);
+    setBadList([...badList, item]);
 
-		// remove the item from the task list
-		removeFromTaskList(i);
-	};
+    // remove the item from the task list
+    removeFromTaskList(i);
+  };
 
-	// from bad list to task list
-	const shiftToTaskList = i => {
-		const item = badList[i];
-		setTaskList([...taskList, item]);
-		removeFromBadList(i);
-	};
+  // from bad list to task list
+  const shiftToTaskList = (i) => {
+    const item = badList[i];
+    setTaskList([...taskList, item]);
+    removeFromBadList(i);
+  };
 
-	const taskListTotalHr = taskList.reduce((acc, item) => acc + item.hr, 0);
-	const badListTotalHr = badList.reduce((acc, item) => acc + item.hr, 0);
-	const ttlHRs = taskListTotalHr + badListTotalHr;
+  const taskListTotalHr = taskList.reduce((acc, item) => acc + item.hr, 0);
+  const badListTotalHr = badList.reduce((acc, item) => acc + item.hr, 0);
+  const ttlHRs = taskListTotalHr + badListTotalHr;
 
-	// const addToTaskList = newInfo => {
+  // const addToTaskList = newInfo => {
 
-	// 	if (ttlHRs + newInfo.hr <= weeklyHrs) {
-	// 		setTaskList([...taskList, newInfo]);
-	// 	} else {
-	// 		alert("You have exceeded the weekly limit of " + weeklyHrs + "hrs");
-	// 	}
-	// };
+  // 	if (ttlHRs + newInfo.hr <= weeklyHrs) {
+  // 		setTaskList([...taskList, newInfo]);
+  // 	} else {
+  // 		alert("You have exceeded the weekly limit of " + weeklyHrs + "hrs");
+  // 	}
+  // };
 
-	const addToTaskList = async newInfo => {
-		if (ttlHRs + newInfo.hr <= weeklyHrs) {
-			// call api to send the data to the server
-			setIsLoading(true);
-			const result = await postTask(newInfo);
-			setResponse(result);
-			setIsLoading(false);
-		} else {
-			alert("You have exceeded the weekly limit of " + weeklyHrs + "hrs");
-		}
-	};
+  const addToTaskList = async (newInfo) => {
+    if (ttlHRs + newInfo.hr <= weeklyHrs) {
+      // call api to send the data to the server
+      setIsLoading(true);
 
-	return (
-		<div className="wrapper">
-			<Container>
-				{/* title comp */}
-				<Title />
+      //first send new data to the server and wait for the response with {status, message}
+      const result = await postTask(newInfo);
+      setResponse(result);
+      setResponse(result);
+      setIsLoading(false);
 
-				{isLoading && <Spinner animation="border" variant="primary" />}
-				{response?.message && (
-					<Alert variant={response.status === "success" ? "success" : "danger"}>
-						{response.message}
-					</Alert>
-				)}
-				{/* form comp */}
-				<AddForm addToTaskList={addToTaskList} />
+      if (result?.status === "success") {
+        //fetch all the task from the server and give it to the taskList state so it will automatically displays in the page
 
-				<hr />
+        const result = await fetchAllTasks();
 
-				{/* Task list comp */}
-				<Row>
-					<Col md="6">
-						<TaskList
-							taskList={taskList}
-							removeFromTaskList={removeFromTaskList}
-							shiftToBadList={shiftToBadList}
-						/>
-					</Col>
-					<Col md="6">
-						<BadList
-							badList={badList}
-							removeFromBadList={removeFromBadList}
-							shiftToTaskList={shiftToTaskList}
-							badListTotalHr={badListTotalHr}
-						/>
-					</Col>
-				</Row>
+        result?.status === "success" && setTaskList(result.result);
+      }
+    } else {
+      alert("You have exceeded the weekly limit of " + weeklyHrs + "hrs");
+    }
+  };
 
-				{/* total hours allocation */}
+  return (
+    <div className="wrapper">
+      <Container>
+        {/* title comp */}
+        <Title />
 
-				<Row>
-					<Col>
-						<h3 className="mt-5">
-							The total allocated hours is: {ttlHRs}
-							hrs
-						</h3>
-					</Col>
-				</Row>
-			</Container>
-		</div>
-	);
+        {isLoading && <Spinner animation="border" variant="primary" />}
+        {response?.message && (
+          <Alert variant={response.status === "success" ? "success" : "danger"}>
+            {response.message}
+          </Alert>
+        )}
+        {/* form comp */}
+        <AddForm addToTaskList={addToTaskList} />
+
+        <hr />
+
+        {/* Task list comp */}
+        <Row>
+          <Col md="6">
+            <TaskList
+              taskList={taskList}
+              removeFromTaskList={removeFromTaskList}
+              shiftToBadList={shiftToBadList}
+            />
+          </Col>
+          <Col md="6">
+            <BadList
+              badList={badList}
+              removeFromBadList={removeFromBadList}
+              shiftToTaskList={shiftToTaskList}
+              badListTotalHr={badListTotalHr}
+            />
+          </Col>
+        </Row>
+
+        {/* total hours allocation */}
+
+        <Row>
+          <Col>
+            <h3 className="mt-5">
+              The total allocated hours is: {ttlHRs}
+              hrs
+            </h3>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  );
 };
 
 export default App;
