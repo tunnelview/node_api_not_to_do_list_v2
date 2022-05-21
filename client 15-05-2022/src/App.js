@@ -78,6 +78,14 @@ const App = () => {
     }
   };
 
+  const handleOnSelectItem = (_id) => {
+    const { value, checked } = e.target;
+
+    checked
+      ? setIds([...Ids, value])
+      : setIds(ids.filter((id) => id !== value));
+  };
+
   return (
     <div className="wrapper">
       <Container>
@@ -111,6 +119,17 @@ const App = () => {
               shiftToTaskList={shiftToTaskList}
               badListTotalHr={badListTotalHr}
             />
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            {ids.concat.length && (
+              <Button onClick={() => removeFromTaskList(ids)} variant="danger">
+                {" "}
+                "Delete Seleted Tasks"
+              </Button>
+            )}
           </Col>
         </Row>
 

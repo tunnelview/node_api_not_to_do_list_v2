@@ -1,0 +1,10 @@
+Steps to Delete multiple items real time from the database
+
+
+
+1. Create an array to hold multiple ids
+2. On checkbox tick and untick, put the id or remove the id from the array
+3. Show new delete button for deleting multiple task
+4. When click on that button, call the delete axios function and pass the array created in step #1
+5. If response status is success then call the function to refetch the tasks
+
