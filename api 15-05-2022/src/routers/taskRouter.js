@@ -33,19 +33,19 @@ router.post("/", async (req, res) => {
 router.patch("/", async (req, res) => {
   const { _id, taskType } = req.body;
   const result = await updateTask({ _id }, { taskType });
+
+  // console.log(result);
+
+  result?._id
+    ? res.json({
+        status: "success",
+        message: "Task has been updated",
+      })
+    : res.json({
+        status: "error",
+        message: "unable to update task, try again later",
+      });
 });
-
-console.log(result);
-
-result?._id
-  ? res.json({
-      status: "success",
-      message: "Task has been updated",
-    })
-  : res.json({
-      status: "error",
-      message: "unable to update task, try again later",
-    });
 
 // router.delete("/:_id", async (req, res) => {
 router.delete("/", async (req, res) => {

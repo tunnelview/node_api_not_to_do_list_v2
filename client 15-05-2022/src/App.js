@@ -42,8 +42,10 @@ const App = () => {
   // remove item form the bad list
   const removeFromBadList = (i) => {};
 
-  const shiftToBadList = (i) => {
-    const item = taskList[i];
+  //   const shiftToBadList = (i) => {
+  const switchTask = (obj) => {
+    console.log(obj);
+    // const item = taskList[i];
 
     // setBadList([...badList, item]);
 
@@ -111,7 +113,7 @@ const App = () => {
             <TaskList
               taskList={taskList}
               removeFromTaskList={removeFromTaskList}
-              shiftToBadList={shiftToBadList}
+              switchTask={switchTask}
               handleOnSelectItem={handleOnSelectItem}
             />
           </Col>
