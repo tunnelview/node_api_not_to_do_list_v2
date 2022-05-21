@@ -17,7 +17,7 @@ const weeklyHrs = 24 * 7;
 const App = () => {
   const [taskList, setTaskList] = useState([]);
   //   const [badList, setBadList] = useState([]);
-  const badList = [];
+
   const [response, setResponse] = useState({
     status: "",
     message: "",

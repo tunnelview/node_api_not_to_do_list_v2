@@ -40,7 +40,7 @@ export const deleteTasks = async (ids) => {
 
 export const updateTask = async (taskObj) => {
   try {
-    const { data } = await axios.patch(taskApiEP, taskObj);
+    const { data } = await axios.patch(taskApiEp, taskObj);
     return data;
   } catch (error) {
     return {
