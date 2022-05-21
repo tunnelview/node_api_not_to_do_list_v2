@@ -37,22 +37,17 @@ const App = () => {
   //   };
 
   // remove item form the task list
-  const removeFromTaskList = (_id) => {
+  const removeFromTaskList = async (_id) => {
     // if (deleteTask()) {
     //   const filteredArg = taskList.filter((item, index) => index !== i);
     //   setTaskList(filteredArg);
-	if (window.confirm("Are you sure you want to delete this task?")) {
-		const result = await deleteTasks([_id]);
-		      console.log(result);
+    if (window.confirm("Are you sure you want to delete this task?")) {
+      const result = await deleteTasks([_id]);
+      console.log(result);
     }
   };
   // remove item form the bad list
-    const removeFromBadList = (i) => {
-      if (deleteTask()) {
-        const filteredArg = badList.filter((item, index) => index !== i);
-        setBadList(filteredArg);
-      }
-    };
+  const removeFromBadList = (i) => {};
 
   const shiftToBadList = (i) => {
     const item = taskList[i];
