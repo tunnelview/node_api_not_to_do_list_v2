@@ -5,7 +5,7 @@ import { AddForm } from "./components/form/AddForm";
 import { BadList } from "./components/task-list/BadList";
 import { TaskList } from "./components/task-list/TaskList";
 import { Title } from "./components/title/Title";
-import { fetchAllTasks, postTask } from "./helpers/axiosHelper";
+import { fetchAllTasks, postTask, deleteTasks } from "./helpers/axiosHelper";
 
 const weeklyHrs = 24 * 7;
 
@@ -37,19 +37,22 @@ const App = () => {
   //   };
 
   // remove item form the task list
-  const removeFromTaskList = (id) => {
-    if (deleteTask()) {
-      const filteredArg = taskList.filter((item, index) => index !== i);
-      setTaskList(filteredArg);
+  const removeFromTaskList = (_id) => {
+    // if (deleteTask()) {
+    //   const filteredArg = taskList.filter((item, index) => index !== i);
+    //   setTaskList(filteredArg);
+	if (window.confirm("Are you sure you want to delete this task?")) {
+		const result = await deleteTasks([_id]);
+		      console.log(result);
     }
   };
   // remove item form the bad list
-  //   const removeFromBadList = (i) => {
-  //     if (deleteTask()) {
-  //       const filteredArg = badList.filter((item, index) => index !== i);
-  //       setBadList(filteredArg);
-  //     }
-  //   };
+    const removeFromBadList = (i) => {
+      if (deleteTask()) {
+        const filteredArg = badList.filter((item, index) => index !== i);
+        setBadList(filteredArg);
+      }
+    };
 
   const shiftToBadList = (i) => {
     const item = taskList[i];
