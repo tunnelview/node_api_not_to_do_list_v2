@@ -11,7 +11,8 @@ const weeklyHrs = 24 * 7;
 
 const App = () => {
   const [taskList, setTaskList] = useState([]);
-  const [badList, setBadList] = useState([]);
+  //   const [badList, setBadList] = useState([]);
+  const badList = [];
   const [response, setResponse] = useState({
     status: "",
     message: "",
@@ -44,10 +45,10 @@ const App = () => {
   const shiftToBadList = (i) => {
     const item = taskList[i];
 
-    setBadList([...badList, item]);
+    // setBadList([...badList, item]);
 
-    // remove the item from the task list
-    removeFromTaskList(i);
+    // // remove the item from the task list
+    // removeFromTaskList(i);
   };
 
   // from bad list to task list
