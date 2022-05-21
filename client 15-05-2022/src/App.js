@@ -5,7 +5,12 @@ import { AddForm } from "./components/form/AddForm";
 import { BadList } from "./components/task-list/BadList";
 import { TaskList } from "./components/task-list/TaskList";
 import { Title } from "./components/title/Title";
-import { fetchAllTasks, postTask, deleteTasks } from "./helpers/axiosHelper";
+import {
+  fetchAllTasks,
+  postTask,
+  deleteTasks,
+  updateTask,
+} from "./helpers/axiosHelper";
 
 const weeklyHrs = 24 * 7;
 
@@ -29,6 +34,9 @@ const App = () => {
     result?.status === "success" && setTaskList(result.result);
     console.log(result);
   };
+
+  const badList = taskList.filter((item) => item.taskType === "badList");
+  const entryList = taskList.filter((item) => item.taskType === "taskList");
 
   // remove item form the task list
   const removeFromTaskList = async (_id) => {
