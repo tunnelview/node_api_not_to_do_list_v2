@@ -43,14 +43,8 @@ const App = () => {
   const removeFromBadList = (i) => {};
 
   //   const shiftToBadList = (i) => {
-  const switchTask = (obj) => {
+  const switchTask = async (obj) => {
     console.log(obj);
-    // const item = taskList[i];
-
-    // setBadList([...badList, item]);
-
-    // // remove the item from the task list
-    // removeFromTaskList(i);
   };
 
   // from bad list to task list

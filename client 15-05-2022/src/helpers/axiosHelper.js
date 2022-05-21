@@ -37,3 +37,15 @@ export const deleteTasks = async (ids) => {
     };
   }
 };
+
+export const updateTask = async (taskObj) => {
+  try {
+    const { data } = await axios.patch(taskApiEP, taskObj);
+    return data;
+  } catch (error) {
+    return {
+      status: "error",
+      message: error.message,
+    };
+  }
+};
