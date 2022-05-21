@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, Col, Container, Row, Spinner } from "react-bootstrap";
+import { Alert, Col, Container, Row, Spinner, Button } from "react-bootstrap";
 import "./App.css";
 import { AddForm } from "./components/form/AddForm";
 import { BadList } from "./components/task-list/BadList";
@@ -12,12 +12,12 @@ const weeklyHrs = 24 * 7;
 const App = () => {
   const [taskList, setTaskList] = useState([]);
   const [badList, setBadList] = useState([]);
-
   const [response, setResponse] = useState({
     status: "",
     message: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [ids, setIds] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -32,7 +32,7 @@ const App = () => {
   // remove item form the task list
   const removeFromTaskList = async (_id) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
-      const result = await deleteTasks([_id]);
+      const result = await deleteTasks(_id);
       setResponse(result);
 
       result.status === "success" ? fetchData() : setResponse(result);
@@ -78,13 +78,14 @@ const App = () => {
     }
   };
 
-  const handleOnSelectItem = (_id) => {
+  const handleOnSelectItem = (e) => {
     const { value, checked } = e.target;
 
     checked
-      ? setIds([...Ids, value])
+      ? setIds([...ids, value])
       : setIds(ids.filter((id) => id !== value));
   };
+  console.log(ids);
 
   return (
     <div className="wrapper">
@@ -110,6 +111,7 @@ const App = () => {
               taskList={taskList}
               removeFromTaskList={removeFromTaskList}
               shiftToBadList={shiftToBadList}
+              handleOnSelectItem={handleOnSelectItem}
             />
           </Col>
           <Col md="6">

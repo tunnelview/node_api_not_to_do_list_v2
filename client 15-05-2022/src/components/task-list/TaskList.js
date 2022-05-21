@@ -1,7 +1,12 @@
 import React from "react";
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 
-export const TaskList = ({ taskList, removeFromTaskList, shiftToBadList }) => {
+export const TaskList = ({
+  taskList,
+  removeFromTaskList,
+  shiftToBadList,
+  handleOnSelectItem,
+}) => {
   return (
     <div>
       <h2 className="text-center">Task list</h2>
@@ -13,7 +18,11 @@ export const TaskList = ({ taskList, removeFromTaskList, shiftToBadList }) => {
           {taskList.map((item, i) => (
             <tr key={item._id}>
               <td>
-                <Form.Check type="checkbox" />
+                <Form.Check
+                  value={item._id}
+                  onClick={handleOnSelectItem}
+                  type="checkbox"
+                />
               </td>
               <td>{item.task}</td>
               <td>{item.hr}hrs</td>

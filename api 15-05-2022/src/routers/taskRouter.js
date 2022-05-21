@@ -34,11 +34,13 @@ router.post("/", async (req, res) => {
 router.delete("/", async (req, res) => {
   const ids = req.body;
 
+  console.log(ids);
+
   const { deletedCount } = await deleteMultipleTasks(ids);
   // console.log(result);
   deletedCount
     ? res.json({
-        status: "Success",
+        status: "success",
         message: "Selected Task Has Been Deleted",
       })
     : res.json({
