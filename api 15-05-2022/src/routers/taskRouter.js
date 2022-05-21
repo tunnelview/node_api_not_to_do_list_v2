@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
 
 // router.delete("/:_id", async (req, res) => {
 router.delete("/", async (req, res) => {
-  const { ids } = req.body;
+  const ids = req.body;
 
   const { deletedCount } = await deleteMultipleTasks(ids);
   // console.log(result);

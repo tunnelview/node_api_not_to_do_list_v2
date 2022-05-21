@@ -28,7 +28,7 @@ export const fetchAllTasks = async () => {
 
 export const deleteTasks = async (ids) => {
   try {
-    const { data } = await axios.delete(taskApiEp, { ids });
+    const { data } = await axios.delete(taskApiEp, { data: ids });
     return data;
   } catch (error) {
     return {

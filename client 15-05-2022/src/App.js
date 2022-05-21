@@ -20,13 +20,10 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      fetchTasks();
-    };
     fetchData();
   }, []);
 
-  const fetchTasks = async () => {
+  const fetchData = async () => {
     const result = await fetchAllTasks();
     result?.status === "success" && setTaskList(result.result);
     console.log(result);
@@ -36,7 +33,9 @@ const App = () => {
   const removeFromTaskList = async (_id) => {
     if (window.confirm("Are you sure you want to delete this task?")) {
       const result = await deleteTasks([_id]);
-      console.log(result);
+      setResponse(result);
+
+      result.status === "success" ? fetchData() : setResponse(result);
     }
   };
   // remove item form the bad list
@@ -73,13 +72,7 @@ const App = () => {
       setResponse(result);
       setIsLoading(false);
 
-      if (result?.status === "success") {
-        //fetch all the task from the server and give it to the taskList state so it will automatically displays in the page
-
-        const result = await fetchAllTasks();
-
-        result?.status === "success" && setTaskList(result.result);
-      }
+      result?.status === "success" ? fetchData() : setTaskList(result);
     } else {
       alert("You have exceeded the weekly limit of " + weeklyHrs + "hrs");
     }
