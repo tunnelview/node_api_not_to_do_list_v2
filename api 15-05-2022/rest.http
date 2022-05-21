@@ -31,3 +31,12 @@ Content-Type: application/json
   ]
 }
  
+
+ ### update task 
+PATCH http://localhost:8000/api/v1/tasks
+Content-Type: application/json
+
+{
+  "_id" : "628828ecca8e8946fd325edc",
+  "taskType": "badList"
+}

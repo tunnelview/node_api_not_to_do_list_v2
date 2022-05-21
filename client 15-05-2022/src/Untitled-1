@@ -8,3 +8,6 @@ Steps to Delete multiple items real time from the database
 [X]4. When click on that button, call the delete axios function and pass the array created in step #1
 [X]5. If response status is success then call the function to refetch the tasks
 
+
+Switching Workflow
+1. 
