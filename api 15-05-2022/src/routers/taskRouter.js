@@ -39,7 +39,7 @@ router.delete("/", async (req, res) => {
   deletedCount
     ? res.json({
         status: "Success",
-        message: "Hello delete response",
+        message: "Selected Task Has Been Deleted",
       })
     : res.json({
         status: "error",
