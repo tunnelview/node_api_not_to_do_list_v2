@@ -30,24 +30,26 @@ const App = () => {
     fetchData();
   }, []);
 
-  const deleteTask = () => {
-    return window.confirm("Are you sure you want to delete this task?");
-  };
+  //   const deleteTask = () => {
+  //     if (window.confirm("Are you sure you want to delete this task?")) {
+  //       console.log(_id);
+  //     }
+  //   };
 
   // remove item form the task list
-  const removeFromTaskList = (i) => {
+  const removeFromTaskList = (id) => {
     if (deleteTask()) {
       const filteredArg = taskList.filter((item, index) => index !== i);
       setTaskList(filteredArg);
     }
   };
   // remove item form the bad list
-  const removeFromBadList = (i) => {
-    if (deleteTask()) {
-      const filteredArg = badList.filter((item, index) => index !== i);
-      setBadList(filteredArg);
-    }
-  };
+  //   const removeFromBadList = (i) => {
+  //     if (deleteTask()) {
+  //       const filteredArg = badList.filter((item, index) => index !== i);
+  //       setBadList(filteredArg);
+  //     }
+  //   };
 
   const shiftToBadList = (i) => {
     const item = taskList[i];
